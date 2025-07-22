@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'your-dockerhub-username/your-app'
-        DOCKER_CREDENTIALS_ID = 'docker-hub-creds'
+        DOCKER_IMAGE = 'kanchya2507@gmail.com'
+        DOCKER_CREDENTIALS_ID = 'DockerHubCred'
     }
 
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/your-user/your-repo.git'
+                git 'https://github.com/DevSecOps-Project-Org5/my-java-app.git'
             }
         }
 
