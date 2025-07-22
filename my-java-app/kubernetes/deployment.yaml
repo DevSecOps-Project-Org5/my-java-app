@@ -1,0 +1,43 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: my-java-app-deployment 
+  labels: 
+    app: my-java-app 
+spec: 
+  replicas: 2 # You can adjust this 
+  selector: 
+    matchLabels: 
+      app: my-java-app 
+  template: 
+    metadata: 
+      labels: 
+        app: my-java-app 
+    spec: 
+      containers: 
+      - name: my-java-app 
+        # This image will be dynamically updated by Jenkins 
+        image: REPLACE_IMAGE_WITH_DYNAMIC_TAG 
+        ports: 
+        - containerPort: 8080 
+        resources: 
+          limits: 
+            memory: "768Mi" 
+            cpu: "700m" 
+          requests: 
+            memory: "384Mi" 
+            cpu: "350m" 
+        livenessProbe: 
+          httpGet: 
+            path: /actuator/health 
+            port: 8080 
+          initialDelaySeconds: 45 # Give Spring Boot time to start 
+          periodSeconds: 10 
+          timeoutSeconds: 5 
+        readinessProbe: 
+          httpGet: 
+            path: /actuator/health 
+            port: 8080 
+          initialDelaySeconds: 30 
+          periodSeconds: 5 
+          timeoutSeconds: 3 
